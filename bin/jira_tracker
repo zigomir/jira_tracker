@@ -1,6 +1,34 @@
 #!/usr/bin/env ruby
 
 require 'jira_tracker'
+require 'yaml'
+
+if ARGV[0] == 'initialize'
+  settings_file = "#{Dir.home}/.jira_tracker.yml"
+
+  if File.exists?(settings_file)
+    p "#{settings_file} already exists. If you want to change settings delete it or edit it."
+    exit
+  end
+
+  settings = {
+    'site'        => 'https://your-jira-domain.com',
+    'username'    => 'your-jira-username',
+    'password'    => 'your-jira-password',
+    'time_track_issue_summary' => 'Time Tracking Ticket'
+  }
+
+  p "Please enter your jira site. (Example: #{settings['site']}):"
+  settings['site']     = $stdin.gets.chomp
+  p 'Please enter your jira username:'
+  settings['username'] = $stdin.gets.chomp
+  p 'Please enter your jira password:'
+  settings['password'] = $stdin.gets.chomp
+
+  File.write(settings_file, settings.to_yaml)
+  p "Writing #{settings_file}"
+  exit
+end
 
 issue      = ARGV[0]
 time_spent = ARGV[1]
@@ -14,7 +42,5 @@ if time_spent.nil? or time_spent.length < 2
   p 'You forgot to specify time spent or it is to short.'
   exit
 end
-
-# TODO init
 
 JiraTracker.run(issue, time_spent)

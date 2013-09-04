@@ -1,29 +1,36 @@
 # JiraTracker
 
-URL: https://astina.atlassian.net/rest/api/2/issue/XOYA-6
+Simple tool to track the time you spent on Jira issues.
 
-## Installation
+## Installation and setup
 
-Add this line to your application's Gemfile:
-
-    gem 'jira_tracker'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install jira_tracker
+```
+gem install jira_tracker
+rbenv rehash
+jira_tracker initialize
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+jira_tracker <ticket/project> <time-spent>
+```
 
-## Contributing
+When you work on specific ticket
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+```
+jira_tracker xoya-10 1h
+```
+
+When you don't have any ticket but you work on a project
+
+```
+jira_tracker xoya 1h
+```
+
+
+If you put `-` in a first argument, program will try to find a specific ticket, 
+otherwise will look for a project with ticket that has summary `Time Tracking Ticket`. 
+
+*You can specify a time unit after a time value 'X', such as Xw, Xd, Xh or Xm,
+to represent weeks (w), days (d), hours (h) and minutes (m), respectively.*

@@ -1,0 +1,4 @@
+site: https://your-jira-domain.com
+username: your-jira-username
+password: your-jira-password
+time_track_issue_summary: Time Tracking Ticket

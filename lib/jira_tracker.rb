@@ -9,20 +9,18 @@ module JiraTracker
 
   def self.run(issue, time_spent)
     begin
-      @config = YAML.load(File.open("#{Dir.home}/.jira_tracker.yml"))
+      @config = YAML.load_file "#{Dir.home}/.jira_tracker.yml"
     rescue
       p 'Setting file jira_tracker.yml not found!'
       exit
     end
 
-    options = {
-      :username       => @config['username'],
-      :password       => @config['password'],
-      :site           => @config['site'],
-      :context_path   => '',
-      :rest_base_path => '/rest/api/2',
-      :auth_type      => :basic
-    }
+    options = @config.merge({
+      context_path:   '',
+      rest_base_path: '/rest/api/2',
+      auth_type:      :basic
+    })
+
     client = JIRA::Client.new(options)
     JiraTracker.worklog(issue, time_spent, client)
   end
@@ -37,6 +35,7 @@ module JiraTracker
         client.Issue.jql(jql).first
       end
     end
+
     worklog = jira_issue.worklogs.build
     time_spent_till_now = worklog.issue.timespent / 3600
 

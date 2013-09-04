@@ -3,8 +3,14 @@
 require 'jira_tracker'
 require 'yaml'
 
+settings_file = "#{Dir.home}/.jira_tracker.yml"
+
+if not(File.exists?(settings_file)) and ARGV[0] != 'initialize'
+  puts "Perhapse you want to initialize jira_tracker first. Please do it with \"jira_tracker initialize\"."
+  exit 1
+end
+
 if ARGV[0] == 'initialize'
-  settings_file = "#{Dir.home}/.jira_tracker.yml"
 
   if File.exists?(settings_file)
     p "#{settings_file} already exists. If you want to change settings delete it or edit it."
@@ -28,6 +34,12 @@ if ARGV[0] == 'initialize'
   File.write(settings_file, settings.to_yaml)
   p "Writing #{settings_file}"
   exit
+
+elsif ARGV[0] == 'find'
+
+  puts "U should do something here, right? :) "
+  exit
+
 end
 
 issue      = ARGV[0]

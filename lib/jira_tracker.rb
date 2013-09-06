@@ -37,11 +37,14 @@ module JiraTracker
     end
 
     worklog = jira_issue.worklogs.build
-    time_spent_till_now = worklog.issue.timespent / 3600
 
     worklog.save({'timeSpent' => time_spent})
     p "Thanks! #{time_spent} was added to #{jira_issue.key} - #{jira_issue.summary}"
-    p "Time spent on this issue before #{time_spent_till_now}h"
+
+    unless worklog.issue.timespent.nil?
+      time_spent_till_now = worklog.issue.timespent / 3600
+      p "Time spent on this issue before #{time_spent_till_now}h"
+    end
   end
 
   def self.find

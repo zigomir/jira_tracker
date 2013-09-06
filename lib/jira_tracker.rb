@@ -15,11 +15,14 @@ module JiraTracker
       exit
     end
 
-    options = @config.merge({
-      context_path:   '',
-      rest_base_path: '/rest/api/2',
-      auth_type:      :basic
-    })
+    options = {
+      :username       => @config['username'],
+      :password       => @config['password'],
+      :site           => @config['site'],
+      :context_path   => '',
+      :rest_base_path => '/rest/api/2',
+      :auth_type      => :basic
+    }
 
     client = JIRA::Client.new(options)
     JiraTracker.worklog(issue, time_spent, client)

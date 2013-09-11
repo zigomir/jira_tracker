@@ -7,7 +7,7 @@ module JiraTracker
 
   @config = nil
 
-  def self.run(issue, time_spent)
+  def self.run(issue, time_spent, comment)
     begin
       @config = YAML.load_file "#{Dir.home}/.jira_tracker.yml"
     rescue
@@ -16,19 +16,19 @@ module JiraTracker
     end
 
     options = {
-      :username       => @config['username'],
-      :password       => @config['password'],
-      :site           => @config['site'],
-      :context_path   => '',
-      :rest_base_path => '/rest/api/2',
-      :auth_type      => :basic
+        :username       => @config['username'],
+        :password       => @config['password'],
+        :site           => @config['site'],
+        :context_path   => '',
+        :rest_base_path => '/rest/api/2',
+        :auth_type      => :basic
     }
 
     client = JIRA::Client.new(options)
-    JiraTracker.worklog(issue, time_spent, client)
+    JiraTracker.worklog(issue, time_spent, comment, client)
   end
 
-  def self.worklog(issue, time_spent, client)
+  def self.worklog(issue, time_spent = '0m', comment = '', client)
     jira_issue = JiraTracker.find do
       if issue.include?('-')
         client.Issue.find(issue)
@@ -41,7 +41,7 @@ module JiraTracker
 
     worklog = jira_issue.worklogs.build
 
-    worklog.save({'timeSpent' => time_spent})
+    worklog.save({'timeSpent' => time_spent, 'comment' => comment})
     p "Thanks! #{time_spent} was added to #{jira_issue.key} - #{jira_issue.summary}"
 
     unless worklog.issue.timespent.nil?

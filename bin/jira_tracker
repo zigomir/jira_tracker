@@ -39,6 +39,7 @@ end
 
 issue      = ARGV[0]
 time_spent = ARGV[1]
+comment    = ARGV[2]
 
 if issue.nil? or issue.length < 4
   p 'You forgot to specify issue/project or it is to short.'
@@ -50,4 +51,4 @@ if time_spent.nil? or time_spent.length < 2
   exit
 end
 
-JiraTracker.run(issue, time_spent)
+JiraTracker.run(issue, time_spent, comment)

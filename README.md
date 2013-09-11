@@ -13,19 +13,19 @@ jira_tracker initialize
 ## Usage
 
 ```
-jira_tracker <ticket/project> <time-spent>
+jira_tracker <ticket/project> <time-spent> "<comment>"
 ```
 
 When you work on specific ticket
 
 ```
-jira_tracker xoya-10 1h
+jira_tracker xoya-10 1h "test comment"
 ```
 
 When you don't have any ticket but you work on a project
 
 ```
-jira_tracker xoya 1h
+jira_tracker xoya 1h "test comment"
 ```
 
 
@@ -34,3 +34,8 @@ otherwise will look for a project with ticket that has summary `Time Tracking Ti
 
 *You can specify a time unit after a time value 'X', such as Xw, Xd, Xh or Xm,
 to represent weeks (w), days (d), hours (h) and minutes (m), respectively.*
+
+
+## Developer docs for JIRA REST api
+
+[Worklog POST request](https://docs.atlassian.com/jira/REST/latest/#idp2062512)

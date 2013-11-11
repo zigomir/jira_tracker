@@ -42,12 +42,12 @@ time_spent = ARGV[1]
 comment    = ARGV[2]
 
 if issue.nil? or issue.length < 4
-  p 'You forgot to specify issue/project or it is to short.'
+  p 'You forgot to specify issue/project or it is too short.'
   exit
 end
 
 if time_spent.nil? or time_spent.length < 2
-  p 'You forgot to specify time spent or it is to short.'
+  p 'You forgot to specify time spent or it is too short.'
   exit
 end
 

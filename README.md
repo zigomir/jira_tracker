@@ -2,11 +2,10 @@
 
 Simple tool to track the time you spent on Jira issues.
 
-## Installation and setup
+## Setup
 
 ```bash
 gem install jira_tracker
-rbenv rehash
 jira_tracker initialize
 ```
 
